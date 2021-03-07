@@ -5,4 +5,8 @@ export interface AuthorsFieldProps {
   authors: Author[];
   /** колбэк измненения поля */
   onChange: (authors: Author[]) => void;
+  /** валидационный статус */
+  validationStatus?: boolean;
+  /** валидационное сообщение */
+  validationMessage?: string;
 }

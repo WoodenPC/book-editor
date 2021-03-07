@@ -2,10 +2,13 @@ import React, { ChangeEvent, FC, useCallback, useContext, useMemo, useState } fr
 import { useHistory, useParams } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
-import { BookPageUrlParams } from './interfaces';
+import { BookPageUrlParams, FieldsValidationData } from './interfaces';
 import BooksContext from '../../components/BooksContext';
 import { Author, Book } from '../../interfaces';
 import Button from '../../components/Button';
+
+import { validateBookData } from './utils/validateBookData';
+import { getDefaultFieldsValidationData } from './utils/getDefaultFieldsValidationData';
 
 import AuthorsField from './Fields/AuthorsField';
 import SimpleField from './Fields/SimpleField';
@@ -17,13 +20,16 @@ import { BottomMenuWrapperStyled, FormStyled, FieldsWrapper } from './styles';
 const BookPage: FC = () => {
   const { id } = useParams<BookPageUrlParams>();
   const { replace, goBack } = useHistory();
-  const { books, handleUpdateBook, handleAddBook } = useContext(BooksContext);
+  const { books, handleUpdateBook, handleAddBook, handleRemoveBook } = useContext(BooksContext);
 
+  const [fieldsValidationData, setFieldsValidationData] = useState<FieldsValidationData>(
+    getDefaultFieldsValidationData(),
+  );
   const [bookData, setBookData] = useState<Book>(() => {
     const defaultBookData = {
       title: '',
       authors: [],
-      pagesCount: 0,
+      pagesCount: 1,
       id: uuid(),
     };
 
@@ -40,8 +46,16 @@ const BookPage: FC = () => {
   });
 
   const handleAddBookToStorage = useCallback(() => {
-    handleAddBook(bookData);
-    replace(`/book/${bookData.id}`);
+    const fieldsValidationData = validateBookData(bookData);
+    setFieldsValidationData(fieldsValidationData);
+    let isValidData = true;
+    Object.keys(fieldsValidationData).forEach((key) => {
+      isValidData = isValidData && fieldsValidationData[key].status;
+    });
+    if (isValidData) {
+      handleAddBook(bookData);
+      replace(`/book/${bookData.id}`);
+    }
   }, [handleAddBook, bookData, replace]);
 
   const handleCancel = useCallback(() => {
@@ -92,28 +106,57 @@ const BookPage: FC = () => {
             value={bookData.title}
             onChange={handleChangeTitle}
             isRequired
-            maxLength={30}
+            placeholder="Самая обычная книга"
+            validationStatus={fieldsValidationData.title.status}
+            validationMessage={fieldsValidationData.title.message}
           />
-          <AuthorsField authors={bookData.authors} onChange={handleChangeAuthors} />
+          <AuthorsField
+            authors={bookData.authors}
+            onChange={handleChangeAuthors}
+            validationStatus={fieldsValidationData.authors.status}
+            validationMessage={fieldsValidationData.authors.message}
+          />
           <SimpleField
             label="Количество страниц"
             value={bookData.pagesCount}
             onChange={handleChangePagesCount}
             isRequired
+            placeholder="0"
+            validationStatus={fieldsValidationData.pageCount.status}
+            validationMessage={fieldsValidationData.pageCount.message}
           />
-          <SimpleField label="Название издательства" value={bookData.publisher} onChange={handleChangePublisher} />
+          <SimpleField
+            label="Название издательства"
+            value={bookData.publisher}
+            onChange={handleChangePublisher}
+            validationMessage={fieldsValidationData.publisher.message}
+            validationStatus={fieldsValidationData.publisher.status}
+          />
           <SimpleField
             label="Год публикации"
             value={bookData.publicationYear}
             onChange={handleChangePublicationYear}
-            width="80px"
+            type="number"
+            width="100px"
+            placeholder="1800"
+            validationMessage={fieldsValidationData.publicationYear.message}
+            validationStatus={fieldsValidationData.publicationYear.status}
           />
-          <SimpleField label="ISBN" value={bookData.isbn} onChange={handleChangeIsbn} />
+          <SimpleField
+            label="ISBN"
+            value={bookData.isbn}
+            onChange={handleChangeIsbn}
+            placeholder="978-3-16-148410-0"
+            validationMessage={fieldsValidationData.isbn.message}
+            validationStatus={fieldsValidationData.isbn.status}
+          />
           <SimpleField
             label="Дата выхода"
             value={bookData.releaseDate}
             type="date"
             onChange={handleChangeReleaseDate}
+            validationMessage={fieldsValidationData.releaseDate.message}
+            validationStatus={fieldsValidationData.releaseDate.status}
           />
         </FieldsWrapper>
       </FormStyled>
@@ -124,8 +167,8 @@ const BookPage: FC = () => {
         </BottomMenuWrapperStyled>
       ) : (
         <BottomMenuWrapperStyled>
-          <Button onClick={handleCancel} text="Удалить книгу" />
-          <Button onClick={handleAddBookToStorage} text="Сохранить изменения" />
+          <Button text="Удалить книгу" />
+          <Button text="Сохранить изменения" />
         </BottomMenuWrapperStyled>
       )}
     </div>

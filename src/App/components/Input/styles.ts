@@ -11,7 +11,7 @@ export const InputStyled = styled.input`
 `;
 
 export const InputWrapperStyled = styled.div<InputWrapperStyledProps>`
-  border: ${({ theme }) => `2px solid ${theme.colors.grey6}`};
+  border: ${({ theme }) => `2px solid ${theme.colors.grey8}`};
   border-radius: 4px;
   padding: 4px 6px;
   width: ${({ $width }) => $width};

@@ -103,7 +103,7 @@ export const BooksContextProvider: FC = ({ children }) => {
       const { byPublicationYear } = prevSortingRules;
       const updatedSortingRules: BooksSortingRules = {
         ...prevSortingRules,
-        byTitle: byPublicationYear === 'asc' ? 'desc' : 'asc',
+        byPublicationYear: byPublicationYear === 'asc' ? 'desc' : 'asc',
       };
       saveSortingRulesToStorage(updatedSortingRules);
       return updatedSortingRules;

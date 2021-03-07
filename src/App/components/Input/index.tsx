@@ -5,7 +5,8 @@ import { InputStyled, InputWrapperStyled } from './styles';
 
 /** компонент поле ввода */
 const Input: FC<InputProps> = (props) => {
-  const { value, onChange, type = 'text', placeholder, width = '100%', id, maxLength, min, max } = props;
+  const { value, onChange, type = 'text', placeholder, width = '100%', id, inputAttributes = {} } = props;
+
   return (
     <InputWrapperStyled $width={width}>
       <InputStyled
@@ -14,9 +15,7 @@ const Input: FC<InputProps> = (props) => {
         type={type}
         placeholder={placeholder}
         id={id}
-        maxLength={maxLength}
-        min={min}
-        max={max}
+        {...inputAttributes}
       />
     </InputWrapperStyled>
   );

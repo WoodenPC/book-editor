@@ -6,5 +6,5 @@ export const LinkStyled = styled(Link)`
   display: inline-block;
   padding: 4px 6px;
   border-radius: 4px;
-  color: ${({ theme }) => theme.colors.grey6};
+  color: ${({ theme }) => theme.colors.grey10};
 `;

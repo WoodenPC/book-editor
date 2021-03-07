@@ -5,6 +5,7 @@ import Button from '../../../../components/Button';
 import Form from '../../../../components/Form';
 import { Author } from '../../../../interfaces';
 import { AuthorWrapperStyled } from './styles';
+import { AUTHOR_INPUT_ATTRIBUTES } from './constants';
 
 /** поле с авторами */
 const AuthorsField: FC<AuthorsFieldProps> = (props) => {
@@ -76,14 +77,14 @@ const AuthorsField: FC<AuthorsFieldProps> = (props) => {
             value={author.surname}
             onChange={handleEditAuthorSurname}
             id={`authorSurname-${index}`}
-            maxLength={20}
+            inputAttributes={AUTHOR_INPUT_ATTRIBUTES}
           />
           <Input
             placeholder="Имя"
             value={author.name}
             onChange={handleEditAuthorName}
             id={`authorName-${index}`}
-            maxLength={20}
+            inputAttributes={AUTHOR_INPUT_ATTRIBUTES}
           />
           {authors.length > 0 && <Button text="Удалить" id={`authorRemoveBtn-${index}`} onClick={handleRemoveAuthor} />}
         </AuthorWrapperStyled>

@@ -1,7 +1,15 @@
 import React, { memo, FC, useCallback, useMemo } from 'react';
 
+import ImageView from '../../../ImageView';
+
 import { BooksListItemProps } from './interfaces';
-import { BooksListItemStyled, ButtonsWrapperStyled, BooksListItemContentStyled } from './styles';
+import {
+  BooksListItemStyled,
+  ButtonsWrapperStyled,
+  BooksListItemContentStyled,
+  BookContentInfoStyled,
+  BookTitleStyled,
+} from './styles';
 import Button from '../../../Button';
 
 /** элемент списка книг */
@@ -22,17 +30,17 @@ const BooksListItem: FC<BooksListItemProps> = ({ book, onRemoveBook, onEditBook 
     <BooksListItemStyled>
       <BooksListItemContentStyled>
         <div>
-          <img src={image} alt="Изображение книги" width={200} height={200} />
+          <ImageView src={image} alt="Изображение книги" width={200} height={200} />
         </div>
-        <div>
-          <h3>{title}</h3>
+        <BookContentInfoStyled>
+          <BookTitleStyled>{title}</BookTitleStyled>
           <p>Авторы: {authorsInfo}</p>
           {publisher && <p>Издатель: {publisher}</p>}
           {publicationYear && <p>Год публикации: {publicationYear}</p>}
           {releaseDate && <p>Дата выхода в тираж: {releaseDate}</p>}
           <p>Кол-во страниц: {pagesCount}</p>
           {isbn && <p>ISBN: {isbn}</p>}
-        </div>
+        </BookContentInfoStyled>
       </BooksListItemContentStyled>
       <ButtonsWrapperStyled>
         <Button onClick={handleEditBook} text="Редактировать" />

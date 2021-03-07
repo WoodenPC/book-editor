@@ -3,18 +3,24 @@ import { DefaultTheme } from 'styled-components';
 /** значения переменных темы приложения */
 export const APP_THEME: DefaultTheme = {
   colors: {
-    grey1: '#D9D9D9',
-    grey2: '#DBDBDB',
-    grey3: '#CCCCCC',
-    grey4: '#B3B3B3',
-    grey5: '#7F7F7F',
-    grey6: '#7F8285',
-    grey7: '#595959',
+    grey1: '#F0F2F3',
+    grey2: '#F2F2F2',
+    grey3: '#E5E5E5',
+    grey4: '#E6E6E6',
+    grey5: '#D9D9D9',
+    grey6: '#DBDBDB',
+    grey7: '#CCCCCC',
+    grey8: '#B3B3B3',
+    grey9: '#7F7F7F',
+    grey10: '#7F8285',
+    grey11: '#595959',
 
     red: '#ff0000',
 
     black: '#000000',
     white: '#ffffff',
+
+    modalBackground: 'rgba(0, 0, 0, 0.5)',
   },
   fontSize: {
     s: '13px',

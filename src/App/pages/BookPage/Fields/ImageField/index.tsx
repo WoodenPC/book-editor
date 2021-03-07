@@ -1,9 +1,9 @@
 import React, { memo, FC, useCallback, ChangeEvent, useRef } from 'react';
 import { ImageFieldProps } from './interfaces';
 import Button from '../../../../components/Button';
+import ImageView from '../../../../components/ImageView';
 
 import { ImageFieldStyled } from './styles';
-import ImageNotFound from './image-not-found.png';
 
 const ImageField: FC<ImageFieldProps> = (props) => {
   const { imageUrl, onChange } = props;
@@ -40,7 +40,7 @@ const ImageField: FC<ImageFieldProps> = (props) => {
   }, [inputRef]);
   return (
     <ImageFieldStyled>
-      <img src={imageUrl || ImageNotFound} alt="Обложка книги" width={200} height={200} />
+      <ImageView src={imageUrl} alt="Обложка книги" width={200} height={200} />
       <input ref={inputRef} type="file" onChange={handleLoadImage} accept=".gif,.jpg,.jpeg,.png" />
       <Button text="Загрузить обложку" onClick={handleOpenFileDialog} />
     </ImageFieldStyled>

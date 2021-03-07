@@ -9,20 +9,19 @@ export const ButtonStyled = styled.button<ButtonStyledProps>`
   border-radius: 4px;
   cursor: pointer;
   min-height: 30px;
-  ${({ $appearance = 'secondary', theme }) => {
+  ${({ $appearance = 'primary', theme }) => {
     const { colors } = theme;
     if ($appearance === 'primary') {
       return css`
         background-color: ${colors.grey4};
-        color: ${colors.black};
-
+        color: ${colors.grey11};
         &:hover {
           background-color: ${colors.grey6};
         }
       `;
     }
     return css`
-      color: ${colors.grey6};
+      color: ${colors.grey11};
     `;
   }}
 
@@ -30,7 +29,7 @@ export const ButtonStyled = styled.button<ButtonStyledProps>`
     const { colors } = theme;
     if ($variant === 'outlined') {
       return css`
-        border: 1px solid ${colors.grey4};
+        border: 1px solid ${colors.grey8};
       `;
     }
   }}
