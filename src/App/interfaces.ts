@@ -10,7 +10,7 @@ export interface Author {
 export interface Book {
   /** идентификатор книги */
   id: string;
-  /** название книги */
+  /** заголовок книги */
   title: string;
   /** список автором */
   authors: Author[];

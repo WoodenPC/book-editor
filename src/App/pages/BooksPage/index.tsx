@@ -1,11 +1,7 @@
 import React, { FC, useContext } from 'react';
 
-import BooksList from '../../components/BooksList';
-import BooksContext from '../../components/BooksContext';
-import Button from '../../components/Button';
-
-import { FiltersWrapperStyled } from './styles';
-import { getButtonSortSuffix } from './utils/getButtonSortSuffix';
+import BooksList from '../../widgets/BooksList';
+import BooksContext from '../../BooksContext';
 
 /** страница со списком книг */
 const BooksPage: FC = () => {
@@ -14,17 +10,17 @@ const BooksPage: FC = () => {
   );
   return (
     <div>
-      <FiltersWrapperStyled>
-        <Button
-          text={`Сортировать по названию ${getButtonSortSuffix(sortingRules.byTitle)}`}
-          onClick={handleSortByTitle}
+      {books.length > 0 ? (
+        <BooksList
+          books={books}
+          onRemoveBook={handleRemoveBook}
+          sortingRules={sortingRules}
+          onSortByTitle={handleSortByTitle}
+          onSortByPublicationYear={handleSortByPublicationYear}
         />
-        <Button
-          text={`Сортировать по дате публикации ${getButtonSortSuffix(sortingRules.byPublicationYear)}`}
-          onClick={handleSortByPublicationYear}
-        />
-      </FiltersWrapperStyled>
-      <BooksList books={books} onRemoveBook={handleRemoveBook} />
+      ) : (
+        <h2>Список книг пуст.</h2>
+      )}
     </div>
   );
 };

@@ -1,5 +1,11 @@
 import styled, { css } from 'styled-components';
 
+export const BooksListStyled = styled.ul`
+  padding: 6px;
+  border-radius: 4px;
+  background-color: ${({ theme }) => theme.colors.grey2};
+`;
+
 export const FiltersWrapperStyled = styled.div`
   display: flex;
   flex-direction: row;

@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle, css } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -10,6 +10,13 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const AppLayout = styled.div`
-  max-width: 1024px;
-  margin: 0 auto;
+  ${({ theme }) => css`
+    max-width: 1024px;
+    margin: 0 auto;
+
+    @media screen and (max-width: ${theme.breakpoints.desktop}) {
+      width: 100%;
+      padding: 0 20px;
+    }
+  `}
 `;

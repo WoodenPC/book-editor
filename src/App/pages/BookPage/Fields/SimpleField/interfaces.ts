@@ -1,4 +1,4 @@
-import { InputProps } from '../../../../components/Input/interfaces';
+import { InputProps } from '../../../../ui/Input/interfaces';
 
 export interface SimpleFieldProps extends InputProps {
   /** подпись поля */

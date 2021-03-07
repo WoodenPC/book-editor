@@ -3,9 +3,9 @@ import { useHistory, useParams } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
 import { BookPageUrlParams, FieldsValidationData } from './interfaces';
-import BooksContext from '../../components/BooksContext';
+import BooksContext from '../../BooksContext';
 import { Author, Book } from '../../interfaces';
-import Button from '../../components/Button';
+import Button from '../../ui/Button';
 
 import { validateBookData } from './utils/validateBookData';
 import { getDefaultFieldsValidationData } from './utils/getDefaultFieldsValidationData';
@@ -19,9 +19,10 @@ import { BottomMenuWrapperStyled, FormStyled, FieldsWrapper } from './styles';
 /** Страница с инфой по книге */
 const BookPage: FC = () => {
   const { id } = useParams<BookPageUrlParams>();
-  const { replace, goBack } = useHistory();
+  const { push, goBack, replace } = useHistory();
   const { books, handleUpdateBook, handleAddBook, handleRemoveBook } = useContext(BooksContext);
 
+  const [isDirty, setIsDirty] = useState(false);
   const [fieldsValidationData, setFieldsValidationData] = useState<FieldsValidationData>(
     getDefaultFieldsValidationData(),
   );
@@ -29,7 +30,7 @@ const BookPage: FC = () => {
     const defaultBookData = {
       title: '',
       authors: [],
-      pagesCount: 1,
+      pagesCount: 0,
       id: uuid(),
     };
 
@@ -54,9 +55,19 @@ const BookPage: FC = () => {
     });
     if (isValidData) {
       handleAddBook(bookData);
-      replace(`/book/${bookData.id}`);
+      push(`/`);
     }
-  }, [handleAddBook, bookData, replace]);
+  }, [handleAddBook, bookData, push]);
+
+  const handleRemoveBookFromStorage = useCallback(() => {
+    handleRemoveBook(bookData);
+    replace('/');
+  }, [bookData, replace]);
+
+  const handleUpdateBookInStorage = useCallback(() => {
+    handleUpdateBook(bookData);
+    setIsDirty(false);
+  }, [bookData]);
 
   const handleCancel = useCallback(() => {
     goBack();
@@ -64,35 +75,42 @@ const BookPage: FC = () => {
 
   const handleChangeTitle = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setBookData((prevBookData) => ({ ...prevBookData, title: event.target.value }));
+    setIsDirty(true);
   }, []);
 
   const handleChangeAuthors = useCallback((authors: Author[]) => {
     setBookData((prevBookData) => ({ ...prevBookData, authors }));
+    setIsDirty(true);
   }, []);
 
   const handleChangePagesCount = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setBookData((prevBookData) => ({ ...prevBookData, pagesCount: +event.target.value }));
+    setIsDirty(true);
   }, []);
 
   const handleChangePublisher = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setBookData((prevBookData) => ({ ...prevBookData, publisher: event.target.value }));
+    setIsDirty(true);
   }, []);
 
   const handleChangePublicationYear = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setBookData((prevBookData) => ({ ...prevBookData, publicationYear: +event.target.value }));
+    setIsDirty(true);
   }, []);
 
   const handleChangeIsbn = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setBookData((prevBookData) => ({ ...prevBookData, isbn: event.target.value }));
+    setIsDirty(true);
   }, []);
 
   const handleChangeImage = useCallback((imageUrl?: string) => {
     setBookData((prevBookData) => ({ ...prevBookData, image: imageUrl }));
+    setIsDirty(true);
   }, []);
 
   const handleChangeReleaseDate = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    console.log(typeof event.target.value);
     setBookData((prevBookData) => ({ ...prevBookData, releaseDate: event.target.value }));
+    setIsDirty(true);
   }, []);
 
   return (
@@ -102,11 +120,11 @@ const BookPage: FC = () => {
         <ImageField imageUrl={bookData.image} onChange={handleChangeImage} />
         <FieldsWrapper>
           <SimpleField
-            label="Название книги"
-            value={bookData.title}
+            label="Заголовок книги"
+            defaultValue={bookData.title}
             onChange={handleChangeTitle}
             isRequired
-            placeholder="Самая обычная книга"
+            placeholder="Заголовок"
             validationStatus={fieldsValidationData.title.status}
             validationMessage={fieldsValidationData.title.message}
           />
@@ -118,7 +136,6 @@ const BookPage: FC = () => {
           />
           <SimpleField
             label="Количество страниц"
-            value={bookData.pagesCount}
             onChange={handleChangePagesCount}
             isRequired
             placeholder="0"
@@ -127,14 +144,14 @@ const BookPage: FC = () => {
           />
           <SimpleField
             label="Название издательства"
-            value={bookData.publisher}
+            defaultValue={bookData.publisher}
             onChange={handleChangePublisher}
             validationMessage={fieldsValidationData.publisher.message}
             validationStatus={fieldsValidationData.publisher.status}
           />
           <SimpleField
             label="Год публикации"
-            value={bookData.publicationYear}
+            defaultValue={bookData.publicationYear}
             onChange={handleChangePublicationYear}
             type="number"
             width="100px"
@@ -144,15 +161,15 @@ const BookPage: FC = () => {
           />
           <SimpleField
             label="ISBN"
-            value={bookData.isbn}
+            defaultValue={bookData.isbn}
             onChange={handleChangeIsbn}
             placeholder="978-3-16-148410-0"
             validationMessage={fieldsValidationData.isbn.message}
             validationStatus={fieldsValidationData.isbn.status}
           />
           <SimpleField
-            label="Дата выхода"
-            value={bookData.releaseDate}
+            label="Дата выхода в тираж"
+            defaultValue={bookData.releaseDate}
             type="date"
             onChange={handleChangeReleaseDate}
             validationMessage={fieldsValidationData.releaseDate.message}
@@ -163,12 +180,12 @@ const BookPage: FC = () => {
       {!id ? (
         <BottomMenuWrapperStyled>
           <Button onClick={handleCancel} text="Отмена" />
-          <Button onClick={handleAddBookToStorage} text="Добавить книгу" />
+          <Button onClick={handleAddBookToStorage} appearance="primary" text="Добавить книгу" />
         </BottomMenuWrapperStyled>
       ) : (
         <BottomMenuWrapperStyled>
-          <Button text="Удалить книгу" />
-          <Button text="Сохранить изменения" />
+          <Button text="Удалить книгу" onClick={handleRemoveBookFromStorage} />
+          {isDirty && <Button text="Сохранить изменения" appearance="primary" onClick={handleUpdateBookInStorage} />}
         </BottomMenuWrapperStyled>
       )}
     </div>

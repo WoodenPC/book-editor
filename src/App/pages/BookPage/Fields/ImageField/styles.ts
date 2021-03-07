@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Form from '../../../../components/Form';
+import Form from '../../../../ui/Form';
 
 export const ImageFieldStyled = styled(Form.FormField)`
   display: grid;

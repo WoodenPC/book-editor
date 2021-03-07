@@ -21,6 +21,9 @@ export const APP_THEME: DefaultTheme = {
     white: '#ffffff',
 
     modalBackground: 'rgba(0, 0, 0, 0.5)',
+
+    green1: '#19966e',
+    green2: '#16825f',
   },
   fontSize: {
     s: '13px',
@@ -33,5 +36,9 @@ export const APP_THEME: DefaultTheme = {
     regular: 400,
     medium: 500,
     bold: 700,
+  },
+  breakpoints: {
+    desktop: '1024px',
+    tablet: '768px',
   },
 };

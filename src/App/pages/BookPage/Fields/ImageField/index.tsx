@@ -1,7 +1,7 @@
 import React, { memo, FC, useCallback, ChangeEvent, useRef } from 'react';
 import { ImageFieldProps } from './interfaces';
-import Button from '../../../../components/Button';
-import ImageView from '../../../../components/ImageView';
+import Button from '../../../../ui/Button';
+import ImageView from '../../../../ui/ImageView';
 
 import { ImageFieldStyled } from './styles';
 

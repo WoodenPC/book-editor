@@ -1,15 +1,16 @@
 import React, { ChangeEvent, FC, memo, useCallback, useState } from 'react';
 import { AuthorsFieldProps } from './interfaces';
-import Input from '../../../../components/Input';
-import Button from '../../../../components/Button';
-import Form from '../../../../components/Form';
+import Input from '../../../../ui/Input';
+import Button from '../../../../ui/Button';
+import Form from '../../../../ui/Form';
 import { Author } from '../../../../interfaces';
 import { AuthorWrapperStyled } from './styles';
 import { AUTHOR_INPUT_ATTRIBUTES } from './constants';
+import { ValidationMessageStyled } from '../SimpleField/styles';
 
 /** поле с авторами */
 const AuthorsField: FC<AuthorsFieldProps> = (props) => {
-  const { authors, onChange } = props;
+  const { authors, onChange, validationStatus, validationMessage } = props;
 
   const [authorsData, setAuthorsData] = useState<Author[]>(authors);
 
@@ -92,6 +93,7 @@ const AuthorsField: FC<AuthorsFieldProps> = (props) => {
       <div>
         <Button text="Добавить" onClick={handleAddAuthor} />
       </div>
+      {!validationStatus && <ValidationMessageStyled>{validationMessage}</ValidationMessageStyled>}
     </Form.FormField>
   );
 };

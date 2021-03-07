@@ -1,7 +1,7 @@
 import React, { FC, memo } from 'react';
 
-import Form from '../../../../components/Form';
-import Input from '../../../../components/Input';
+import Form from '../../../../ui/Form';
+import Input from '../../../../ui/Input';
 import { SimpleFieldProps } from './interfaces';
 import { ValidationMessageStyled } from './styles';
 
@@ -18,6 +18,7 @@ const SimpleField: FC<SimpleFieldProps> = (props) => {
     width,
     validationMessage,
     validationStatus,
+    defaultValue,
   } = props;
   return (
     <Form.FormField label={label} isRequired={isRequired}>
@@ -27,6 +28,7 @@ const SimpleField: FC<SimpleFieldProps> = (props) => {
         onChange={onChange}
         placeholder={placeholder}
         inputAttributes={inputAttributes}
+        defaultValue={defaultValue}
         width={width}
       />
       {!validationStatus && <ValidationMessageStyled>{validationMessage}</ValidationMessageStyled>}
