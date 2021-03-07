@@ -4,8 +4,13 @@ import { ButtonProps } from './interfaces';
 import { ButtonStyled } from './styles';
 
 /** компонент кнопки */
-const Button: FC<ButtonProps> = ({ onClick, text }) => {
-  return <ButtonStyled onClick={onClick}>{text}</ButtonStyled>;
+const Button: FC<ButtonProps> = (props) => {
+  const { onClick, text, appearance, variant, id } = props;
+  return (
+    <ButtonStyled id={id} onClick={onClick} $appearance={appearance} $variant={variant}>
+      {text}
+    </ButtonStyled>
+  );
 };
 
 export default memo(Button);

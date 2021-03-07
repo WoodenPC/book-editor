@@ -5,4 +5,6 @@ export interface BooksListItemProps {
   book: Book;
   /** колбэк удаления книги */
   onRemoveBook: (book: Book) => void;
+  /** колбэк редактирования книги */
+  onEditBook: (book: Book) => void;
 }

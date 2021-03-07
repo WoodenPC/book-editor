@@ -21,11 +21,11 @@ export interface Book {
   /** год публикации */
   publicationYear?: number;
   /** дата выхода в тираж */
-  releaseDate?: Date;
+  releaseDate?: string;
   /** ISBN */
-  isbn: string;
+  isbn?: string;
   /** изображение */
-  image: string;
+  image?: string;
 }
 
 /** сортировка */

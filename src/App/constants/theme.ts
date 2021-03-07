@@ -10,6 +10,11 @@ export const APP_THEME: DefaultTheme = {
     grey5: '#7F7F7F',
     grey6: '#7F8285',
     grey7: '#595959',
+
+    red: '#ff0000',
+
+    black: '#000000',
+    white: '#ffffff',
   },
   fontSize: {
     s: '13px',

@@ -31,6 +31,10 @@ export const BooksContextProvider: FC = ({ children }) => {
   }, []);
 
   useEffect(() => {
+    saveBooksToStorage(books);
+  }, [books]);
+
+  useEffect(() => {
     const { byTitle, byPublicationYear } = sortingRules;
     const comparators: Array<(book1: Book, book2: Book) => boolean> = [];
     if (byTitle !== 'none') {
@@ -67,7 +71,7 @@ export const BooksContextProvider: FC = ({ children }) => {
   }, []);
 
   const handleRemoveBook = useCallback((book: Book) => {
-    setBooks((prevBooks) => prevBooks.filter((b) => b.id === book.id));
+    setBooks((prevBooks) => prevBooks.filter((b) => b.id !== book.id));
   }, []);
 
   const handleUpdateBook = useCallback((book: Book) => {
