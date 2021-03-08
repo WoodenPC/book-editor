@@ -20,7 +20,7 @@ export interface Book {
   publisher?: string;
   /** год публикации */
   publicationYear?: number;
-  /** дата выхода в тираж */
+  /** дата выхода в тираж, строка в формате yyyy-mm-dd */
   releaseDate?: string;
   /** ISBN */
   isbn?: string;

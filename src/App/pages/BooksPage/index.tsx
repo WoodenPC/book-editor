@@ -19,7 +19,7 @@ const BooksPage: FC = () => {
           onSortByPublicationYear={handleSortByPublicationYear}
         />
       ) : (
-        <h2>Список книг пуст.</h2>
+        <h1>Список книг пуст. Пожалуйста, добавьте новую книгу.</h1>
       )}
     </div>
   );

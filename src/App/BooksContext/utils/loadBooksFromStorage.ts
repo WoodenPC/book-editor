@@ -8,5 +8,11 @@ export function loadBooksFromStorage(): Book[] {
   if (!item) {
     return [];
   }
-  return JSON.parse(item) as Book[];
+
+  try {
+    return JSON.parse(item) as Book[];
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
 }

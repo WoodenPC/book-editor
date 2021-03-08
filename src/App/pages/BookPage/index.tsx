@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { isValid } from 'date-fns';
 import { v4 as uuid } from 'uuid';
 
 import BooksContext from '../../BooksContext';
@@ -10,6 +11,7 @@ import { BookPageUrlParams, FieldsValidationData } from './interfaces';
 import { validateBookData } from './utils/validateBookData';
 import { getDefaultFieldsValidationData } from './utils/getDefaultFieldsValidationData';
 import { checkIfAllFieldsAreValid } from './utils/checkIfAllFieldsAreValid';
+import { parseDateFromString } from './utils/parseDateFromString';
 import AuthorsField from './Fields/AuthorsField';
 import SimpleField from './Fields/SimpleField';
 import ImageField from './Fields/ImageField';
@@ -25,6 +27,12 @@ const BookPage: FC = () => {
   const [fieldsValidationData, setFieldsValidationData] = useState<FieldsValidationData>(
     getDefaultFieldsValidationData(),
   );
+
+  useEffect(() => {
+    if (id && !books.find((b) => b.id === id)) {
+      replace('/');
+    }
+  }, [id, books, replace]);
 
   const foundBook = useMemo<Book>(
     () =>
@@ -204,6 +212,7 @@ const BookPage: FC = () => {
             value={bookReleaseDate}
             type="date"
             onChange={handleChangeReleaseDate}
+            placeholder="01.01.1800"
             validationMessage={fieldsValidationData.releaseDate.message}
             validationStatus={fieldsValidationData.releaseDate.status}
           />

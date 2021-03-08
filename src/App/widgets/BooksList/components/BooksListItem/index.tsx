@@ -1,5 +1,5 @@
 import React, { memo, FC, useCallback, useMemo } from 'react';
-import { format } from 'date-fns';
+import { format, isValid } from 'date-fns';
 
 import ImageView from '../../../../ui/ImageView';
 import Button from '../../../../ui/Button';
@@ -48,7 +48,7 @@ const BooksListItem: FC<BooksListItemProps> = ({ book, onRemoveBook, onEditBook 
               <b>Год публикации:</b> {publicationYear}
             </p>
           )}
-          {releaseDate && (
+          {releaseDate && isValid(new Date(releaseDate)) && (
             <p>
               <b>Дата выхода в тираж:</b> {format(new Date(releaseDate), 'dd.MM.yyyy')}
             </p>

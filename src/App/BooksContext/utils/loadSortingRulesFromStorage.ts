@@ -8,5 +8,10 @@ export function loadSortingRulesFromStorage(): BooksSortingRules | null {
     return null;
   }
 
-  return JSON.parse(item) as BooksSortingRules;
+  try {
+    return JSON.parse(item) as BooksSortingRules;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
 }
