@@ -21,11 +21,27 @@ const ImageField: FC<ImageFieldProps> = (props) => {
       if (!file) {
         return;
       }
+      /** сжимаем изображение, чтобы не получить километровый dataurl */
       const reader = new FileReader();
-      reader.readAsDataURL(file);
+      const image = new Image();
+      image.width = 250;
+      image.height = 400;
+      image.src = URL.createObjectURL(file);
 
-      reader.onload = () => {
-        onChange(reader.result as string);
+      image.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 250;
+        canvas.height = 400;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          return;
+        }
+        ctx.drawImage(image, 0, 0, image.width, image.height);
+        onChange(canvas.toDataURL('image/jpeg'));
+      };
+
+      reader.onerror = () => {
+        alert('Ошибка при загрузке изображения');
       };
     },
     [onChange],
@@ -41,7 +57,7 @@ const ImageField: FC<ImageFieldProps> = (props) => {
   }, [inputRef]);
   return (
     <ImageFieldStyled>
-      <ImageView src={imageUrl} alt="Обложка книги" width={200} height={200} />
+      <ImageView src={imageUrl} alt="Обложка книги" width={160} height={200} />
       <input ref={inputRef} type="file" onChange={handleLoadImage} accept=".gif,.jpg,.jpeg,.png" />
       <Button text="Загрузить обложку" onClick={handleOpenFileDialog} />
     </ImageFieldStyled>
