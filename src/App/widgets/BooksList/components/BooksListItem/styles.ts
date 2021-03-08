@@ -21,7 +21,7 @@ export const ButtonsWrapperStyled = styled.div`
   display: grid;
   justify-content: right;
   grid-template-columns: auto auto;
-  grid-gap: 4px;
+  grid-gap: 8px;
   padding: 6px;
 
   ${({ theme }) => css`
