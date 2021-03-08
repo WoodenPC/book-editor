@@ -16,7 +16,7 @@ export function getSortedBooks(books: Book[], sortingRules: BooksSortingRules): 
   }
 
   if (comparators.length === 0) {
-    return [];
+    return books;
   }
 
   const updatedBooks = [...books];

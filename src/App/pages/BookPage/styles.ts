@@ -3,11 +3,12 @@ import styled, { css } from 'styled-components';
 import Form from '../../ui/Form';
 
 export const BottomMenuWrapperStyled = styled.div`
-  float: right;
-  display: inline-grid;
-  grid-template-columns: auto auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
   grid-gap: 8px;
-  width: auto;
+  margin-bottom: 8px;
 
   ${({ theme }) => css`
     @media screen and (max-width: ${theme.breakpoints.tablet}) {

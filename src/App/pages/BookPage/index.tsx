@@ -14,6 +14,7 @@ import AuthorsField from './Fields/AuthorsField';
 import SimpleField from './Fields/SimpleField';
 import ImageField from './Fields/ImageField';
 import { BottomMenuWrapperStyled, FormStyled, FieldsWrapper } from './styles';
+import { PUBLISHER_FIELD_ATTRIBUTES, TITLE_FIELD_ATTRIBUTES } from './constants';
 
 /** Страница с инфой по книге */
 const BookPage: FC = () => {
@@ -102,6 +103,7 @@ const BookPage: FC = () => {
     if (isValidData) {
       handleUpdateBook(bookData);
       setIsDirty(false);
+      alert('Успешно сохранено');
     }
   };
 
@@ -156,13 +158,14 @@ const BookPage: FC = () => {
         <ImageField imageUrl={bookImage} onChange={handleChangeImage} />
         <FieldsWrapper>
           <SimpleField
-            label="Заголовок книги"
+            label="Заголовок книги (не более 30 символов)"
             value={bookTitle}
             onChange={handleChangeTitle}
             isRequired
             placeholder="Заголовок"
             validationStatus={fieldsValidationData.title.status}
             validationMessage={fieldsValidationData.title.message}
+            inputAttributes={TITLE_FIELD_ATTRIBUTES}
           />
           <AuthorsField
             authors={bookAuthors}
@@ -171,7 +174,7 @@ const BookPage: FC = () => {
             validationMessage={fieldsValidationData.authors.message}
           />
           <SimpleField
-            label="Количество страниц"
+            label="Количество страниц (больше 0 и не более 10000)"
             onChange={handleChangePagesCount}
             value={bookPageCount}
             isRequired
@@ -181,14 +184,15 @@ const BookPage: FC = () => {
             validationMessage={fieldsValidationData.pageCount.message}
           />
           <SimpleField
-            label="Название издательства"
+            label="Название издательства (не более 30 символов)"
             value={bookPublisher}
             onChange={handleChangePublisher}
             validationMessage={fieldsValidationData.publisher.message}
             validationStatus={fieldsValidationData.publisher.status}
+            inputAttributes={PUBLISHER_FIELD_ATTRIBUTES}
           />
           <SimpleField
-            label="Год публикации"
+            label="Год публикации (не раньше 1800)"
             value={bookPublicationYear}
             onChange={handleChangePublicationYear}
             type="number"
@@ -206,7 +210,7 @@ const BookPage: FC = () => {
             validationStatus={fieldsValidationData.isbn.status}
           />
           <SimpleField
-            label="Дата выхода в тираж"
+            label="Дата выхода в тираж (не раньше 01.01.1800)"
             value={bookReleaseDate}
             type="date"
             onChange={handleChangeReleaseDate}

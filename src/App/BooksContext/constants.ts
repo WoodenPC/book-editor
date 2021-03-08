@@ -10,7 +10,7 @@ export const SORTING_RULES_LOCAL_STORAGE_KEY = 'sortingRules';
 
 /** дефолтные правила сортировки */
 export const DEFAULT_SORTING_RULES: BooksSortingRules = {
-  byTitle: 'none',
+  byTitle: 'asc',
   byPublicationYear: 'none',
 };
 
