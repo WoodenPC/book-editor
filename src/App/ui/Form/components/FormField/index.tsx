@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 
 import { FormFieldProps } from './interfaces';
-
 import { LabelStyled } from './styles';
 
 /** компонент поля формы */

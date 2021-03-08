@@ -1,8 +1,9 @@
 import React, { memo, FC, useCallback, ChangeEvent, useRef } from 'react';
-import { ImageFieldProps } from './interfaces';
+
 import Button from '../../../../ui/Button';
 import ImageView from '../../../../ui/ImageView';
 
+import { ImageFieldProps } from './interfaces';
 import { ImageFieldStyled } from './styles';
 
 const ImageField: FC<ImageFieldProps> = (props) => {

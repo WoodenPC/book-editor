@@ -1,7 +1,8 @@
 import React, { createContext, FC, useCallback, useEffect, useMemo, useState } from 'react';
 
-import { BooksContextState } from './interfaces';
 import { Book, BooksSortingRules } from '../interfaces';
+
+import { BooksContextState } from './interfaces';
 import { loadBooksFromStorage } from './utils/loadBooksFromStorage';
 import { loadSortingRulesFromStorage } from './utils/loadSortingRulesFromStorage';
 import { compareByTitle } from './utils/compareByTitle';

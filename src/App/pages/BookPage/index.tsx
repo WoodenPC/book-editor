@@ -1,19 +1,17 @@
-import React, { ChangeEvent, FC, useCallback, useContext, useMemo, useState } from 'react';
+import React, { ChangeEvent, FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
-import { BookPageUrlParams, FieldsValidationData } from './interfaces';
 import BooksContext from '../../BooksContext';
 import { Author, Book } from '../../interfaces';
 import Button from '../../ui/Button';
 
+import { BookPageUrlParams, FieldsValidationData } from './interfaces';
 import { validateBookData } from './utils/validateBookData';
 import { getDefaultFieldsValidationData } from './utils/getDefaultFieldsValidationData';
-
 import AuthorsField from './Fields/AuthorsField';
 import SimpleField from './Fields/SimpleField';
 import ImageField from './Fields/ImageField';
-
 import { BottomMenuWrapperStyled, FormStyled, FieldsWrapper } from './styles';
 
 /** Страница с инфой по книге */
@@ -26,27 +24,54 @@ const BookPage: FC = () => {
   const [fieldsValidationData, setFieldsValidationData] = useState<FieldsValidationData>(
     getDefaultFieldsValidationData(),
   );
-  const [bookData, setBookData] = useState<Book>(() => {
-    const defaultBookData = {
-      title: '',
-      authors: [],
-      pagesCount: 0,
+
+  const foundBook = useMemo<Book>(
+    () =>
+      books.find((b) => b.id === id) || {
+        title: '',
+        authors: [],
+        pagesCount: 0,
+        id: '',
+      },
+    [id, books],
+  );
+
+  useEffect(() => {
+    setBookTitle(foundBook.title);
+    setBookAuthors(foundBook.authors);
+    setBookPageCount(foundBook.pagesCount);
+    setBookPublisher(foundBook.publisher);
+    setBookPublicationYear(foundBook.publicationYear);
+    setBookReleaseDate(foundBook.releaseDate);
+    setBookIsbn(foundBook.isbn);
+    setBookImage(foundBook.image);
+  }, [foundBook]);
+
+  const [bookTitle, setBookTitle] = useState(foundBook.title);
+  const [bookAuthors, setBookAuthors] = useState<Author[]>(foundBook.authors);
+  const [bookPageCount, setBookPageCount] = useState<number | undefined>(foundBook.pagesCount);
+  const [bookPublisher, setBookPublisher] = useState<string | undefined>(foundBook.publisher);
+  const [bookPublicationYear, setBookPublicationYear] = useState<number | undefined>(foundBook.publicationYear);
+  const [bookReleaseDate, setBookReleaseDate] = useState<string | undefined>(foundBook.releaseDate);
+  const [bookIsbn, setBookIsbn] = useState<string | undefined>(foundBook.isbn);
+  const [bookImage, setBookImage] = useState<string | undefined>(foundBook.image);
+
+  const getBookData = (): Book => {
+    return {
       id: uuid(),
+      title: bookTitle,
+      authors: bookAuthors,
+      pagesCount: bookPageCount || 0,
+      publisher: bookPublisher,
+      publicationYear: bookPublicationYear,
+      releaseDate: bookReleaseDate,
+      isbn: bookIsbn,
+      image: bookImage,
     };
+  };
 
-    if (!id) {
-      /** если нет id возвращаем дефолтный набор данных */
-      return defaultBookData;
-    }
-
-    const foundBook = books.find((b) => b.id === id);
-    if (!foundBook) {
-      replace('/');
-    }
-    return foundBook || defaultBookData;
-  });
-
-  const handleAddBookToStorage = useCallback(() => {
+  const handleAddBookToStorage = () => {
+    const bookData = getBookData();
     const fieldsValidationData = validateBookData(bookData);
     setFieldsValidationData(fieldsValidationData);
     let isValidData = true;
@@ -57,59 +82,61 @@ const BookPage: FC = () => {
       handleAddBook(bookData);
       push(`/`);
     }
-  }, [handleAddBook, bookData, push]);
+  };
 
-  const handleRemoveBookFromStorage = useCallback(() => {
+  const handleRemoveBookFromStorage = () => {
+    const bookData = getBookData();
     handleRemoveBook(bookData);
     replace('/');
-  }, [bookData, replace]);
+  };
 
-  const handleUpdateBookInStorage = useCallback(() => {
+  const handleUpdateBookInStorage = () => {
+    const bookData = getBookData();
     handleUpdateBook(bookData);
     setIsDirty(false);
-  }, [bookData]);
+  };
 
   const handleCancel = useCallback(() => {
     goBack();
   }, [goBack]);
 
   const handleChangeTitle = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setBookData((prevBookData) => ({ ...prevBookData, title: event.target.value }));
+    setBookTitle(event.target.value);
     setIsDirty(true);
   }, []);
 
   const handleChangeAuthors = useCallback((authors: Author[]) => {
-    setBookData((prevBookData) => ({ ...prevBookData, authors }));
+    setBookAuthors(authors);
     setIsDirty(true);
   }, []);
 
   const handleChangePagesCount = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setBookData((prevBookData) => ({ ...prevBookData, pagesCount: +event.target.value }));
+    setBookPageCount(+event.target.value);
     setIsDirty(true);
   }, []);
 
   const handleChangePublisher = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setBookData((prevBookData) => ({ ...prevBookData, publisher: event.target.value }));
+    setBookPublisher(event.target.value);
     setIsDirty(true);
   }, []);
 
   const handleChangePublicationYear = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setBookData((prevBookData) => ({ ...prevBookData, publicationYear: +event.target.value }));
+    setBookPublicationYear(+event.target.value);
     setIsDirty(true);
   }, []);
 
   const handleChangeIsbn = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setBookData((prevBookData) => ({ ...prevBookData, isbn: event.target.value }));
+    setBookIsbn(event.target.value);
     setIsDirty(true);
   }, []);
 
   const handleChangeImage = useCallback((imageUrl?: string) => {
-    setBookData((prevBookData) => ({ ...prevBookData, image: imageUrl }));
+    setBookImage(imageUrl);
     setIsDirty(true);
   }, []);
 
   const handleChangeReleaseDate = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setBookData((prevBookData) => ({ ...prevBookData, releaseDate: event.target.value }));
+    setBookReleaseDate(event.target.value);
     setIsDirty(true);
   }, []);
 
@@ -117,11 +144,11 @@ const BookPage: FC = () => {
     <div>
       <h2>{!id ? 'Добавить новую книгу' : 'Редактировать данные о книге'}</h2>
       <FormStyled description={!id ? 'Заполните поля для добавления новой книги' : undefined}>
-        <ImageField imageUrl={bookData.image} onChange={handleChangeImage} />
+        <ImageField imageUrl={bookImage} onChange={handleChangeImage} />
         <FieldsWrapper>
           <SimpleField
             label="Заголовок книги"
-            defaultValue={bookData.title}
+            value={bookTitle}
             onChange={handleChangeTitle}
             isRequired
             placeholder="Заголовок"
@@ -129,7 +156,7 @@ const BookPage: FC = () => {
             validationMessage={fieldsValidationData.title.message}
           />
           <AuthorsField
-            authors={bookData.authors}
+            authors={bookAuthors}
             onChange={handleChangeAuthors}
             validationStatus={fieldsValidationData.authors.status}
             validationMessage={fieldsValidationData.authors.message}
@@ -137,21 +164,23 @@ const BookPage: FC = () => {
           <SimpleField
             label="Количество страниц"
             onChange={handleChangePagesCount}
+            value={bookPageCount}
             isRequired
+            type="number"
             placeholder="0"
             validationStatus={fieldsValidationData.pageCount.status}
             validationMessage={fieldsValidationData.pageCount.message}
           />
           <SimpleField
             label="Название издательства"
-            defaultValue={bookData.publisher}
+            value={bookPublisher}
             onChange={handleChangePublisher}
             validationMessage={fieldsValidationData.publisher.message}
             validationStatus={fieldsValidationData.publisher.status}
           />
           <SimpleField
             label="Год публикации"
-            defaultValue={bookData.publicationYear}
+            value={bookPublicationYear}
             onChange={handleChangePublicationYear}
             type="number"
             width="100px"
@@ -161,7 +190,7 @@ const BookPage: FC = () => {
           />
           <SimpleField
             label="ISBN"
-            defaultValue={bookData.isbn}
+            value={bookIsbn}
             onChange={handleChangeIsbn}
             placeholder="978-3-16-148410-0"
             validationMessage={fieldsValidationData.isbn.message}
@@ -169,7 +198,7 @@ const BookPage: FC = () => {
           />
           <SimpleField
             label="Дата выхода в тираж"
-            defaultValue={bookData.releaseDate}
+            value={bookReleaseDate}
             type="date"
             onChange={handleChangeReleaseDate}
             validationMessage={fieldsValidationData.releaseDate.message}

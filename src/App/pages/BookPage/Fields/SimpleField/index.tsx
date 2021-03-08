@@ -2,6 +2,7 @@ import React, { FC, memo } from 'react';
 
 import Form from '../../../../ui/Form';
 import Input from '../../../../ui/Input';
+
 import { SimpleFieldProps } from './interfaces';
 import { ValidationMessageStyled } from './styles';
 

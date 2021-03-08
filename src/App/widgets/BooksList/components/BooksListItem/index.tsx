@@ -11,7 +11,6 @@ import {
   BooksListItemContentStyled,
   BookContentInfoStyled,
   BookTitleStyled,
-  BooksListItemContentWrapperStyled,
 } from './styles';
 
 /** элемент списка книг */
@@ -30,19 +29,38 @@ const BooksListItem: FC<BooksListItemProps> = ({ book, onRemoveBook, onEditBook 
   }, [authors]);
   return (
     <BooksListItemStyled>
+      <BookTitleStyled>{title}</BookTitleStyled>
       <BooksListItemContentStyled>
         <div>
           <ImageView src={image} alt="Изображение книги" width={160} height={200} />
         </div>
         <BookContentInfoStyled>
-          <BookTitleStyled>{title}</BookTitleStyled>
-          <br />
-          <p>Авторы: {authorsInfo}</p>
-          {publisher && <p>Издатель: {publisher}</p>}
-          {publicationYear && <p>Год публикации: {publicationYear}</p>}
-          {releaseDate && <p>Дата выхода в тираж: {format(new Date(releaseDate), 'dd.MM.yyyy')}</p>}
-          <p>Кол-во страниц: {pagesCount}</p>
-          {isbn && <p>ISBN: {isbn}</p>}
+          <p>
+            <b>Авторы:</b> {authorsInfo}
+          </p>
+          {publisher && (
+            <p>
+              <b>Издатель:</b> {publisher}
+            </p>
+          )}
+          {publicationYear && (
+            <p>
+              <b>Год публикации:</b> {publicationYear}
+            </p>
+          )}
+          {releaseDate && (
+            <p>
+              <b>Дата выхода в тираж:</b> {format(new Date(releaseDate), 'dd.MM.yyyy')}
+            </p>
+          )}
+          <p>
+            <b>Кол-во страниц:</b> {pagesCount}
+          </p>
+          {isbn && (
+            <p>
+              <b>ISBN:</b> {isbn}
+            </p>
+          )}
         </BookContentInfoStyled>
       </BooksListItemContentStyled>
       <ButtonsWrapperStyled>

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 
 import { FormStyled } from './styles';
 import { FormComponent } from './interfaces';

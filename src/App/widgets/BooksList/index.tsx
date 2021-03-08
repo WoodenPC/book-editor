@@ -1,12 +1,13 @@
 import React, { memo, FC, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
+
+import { Book } from '../../interfaces';
+import Button from '../../ui/Button';
 
 import { BooksListProps } from './interfaces';
 import { BooksListStyled } from './styles';
 import BooksListItem from './components/BooksListItem';
-import { useHistory } from 'react-router-dom';
-import { Book } from '../../interfaces';
-import { FiltersWrapperStyled } from './styles';
-import Button from '../../ui/Button';
+import { FiltersWrapperStyled, BooksListWrapperStyled } from './styles';
 import { getButtonSortSuffix } from './utils/getButtonSortSuffix';
 
 /** список книг */
@@ -24,7 +25,7 @@ const BooksList: FC<BooksListProps> = (props) => {
     return null;
   }
   return (
-    <BooksListStyled>
+    <BooksListWrapperStyled>
       <FiltersWrapperStyled>
         <Button text={`Сортировать по названию ${getButtonSortSuffix(sortingRules.byTitle)}`} onClick={onSortByTitle} />
         <Button
@@ -32,10 +33,12 @@ const BooksList: FC<BooksListProps> = (props) => {
           onClick={onSortByPublicationYear}
         />
       </FiltersWrapperStyled>
-      {books.map((book) => (
-        <BooksListItem book={book} key={book.id} onRemoveBook={onRemoveBook} onEditBook={handleEditBook} />
-      ))}
-    </BooksListStyled>
+      <BooksListStyled>
+        {books.map((book) => (
+          <BooksListItem book={book} key={book.id} onRemoveBook={onRemoveBook} onEditBook={handleEditBook} />
+        ))}
+      </BooksListStyled>
+    </BooksListWrapperStyled>
   );
 };
 

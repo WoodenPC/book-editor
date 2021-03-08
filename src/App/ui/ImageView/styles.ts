@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { ImageNotFoundStyledWrapperProps } from './interfaces';
 
 export const ImageNotFoundStyledWrapper = styled.div<ImageNotFoundStyledWrapperProps>`

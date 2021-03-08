@@ -1,13 +1,12 @@
 import React from 'react';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
-
 import { ThemeProvider } from 'styled-components';
+
 import { APP_THEME } from './constants/theme';
 import BooksPage from './pages/BooksPage';
 import BookPage from './pages/BookPage';
 import Header from './ui/Header';
 import { BooksContextProvider } from './BooksContext';
-
 import { GlobalStyle, AppLayout } from './styles';
 
 const App = () => {

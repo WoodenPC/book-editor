@@ -1,6 +1,6 @@
 import React, { memo, FC } from 'react';
-import { InputProps } from './interfaces';
 
+import { InputProps } from './interfaces';
 import { InputStyled, InputWrapperStyled } from './styles';
 
 /** компонент поле ввода */
@@ -10,7 +10,7 @@ const Input: FC<InputProps> = (props) => {
   return (
     <InputWrapperStyled $width={width}>
       <InputStyled
-        value={value}
+        value={value || ''}
         onChange={onChange}
         type={type}
         placeholder={placeholder}

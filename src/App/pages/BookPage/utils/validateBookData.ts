@@ -1,7 +1,8 @@
 import { Book } from '../../../interfaces';
 import { FieldsValidationData } from '../interfaces';
-import { getDefaultFieldsValidationData } from './getDefaultFieldsValidationData';
 import { ISBN_REGEX } from '../constants';
+
+import { getDefaultFieldsValidationData } from './getDefaultFieldsValidationData';
 
 /** валидация данных книги */
 export function validateBookData(book: Book): FieldsValidationData {

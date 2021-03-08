@@ -7,12 +7,11 @@ export const BooksListItemStyled = styled.li`
   list-style: none;
   border-radius: 4px;
   margin-bottom: 6px;
-  padding: 6px;
   &:last-child {
     margin-bottom: 0;
   }
   background-color: ${({ theme }) => theme.colors.white};
-
+  border: 1px solid ${({ theme }) => theme.colors.green1};
   p {
     word-break: break-word;
   }
@@ -23,6 +22,7 @@ export const ButtonsWrapperStyled = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   grid-gap: 4px;
+  padding: 6px;
 
   ${({ theme }) => css`
     @media screen and (max-width: ${theme.breakpoints.tablet}) {
@@ -41,6 +41,7 @@ export const BooksListItemContentStyled = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
   grid-gap: 14px;
+  padding: 6px;
 
   ${({ theme }) => css`
     @media screen and (max-width: ${theme.breakpoints.tablet}) {
@@ -62,5 +63,8 @@ export const BookTitleStyled = styled.p`
   ${({ theme }) => css`
     font-size: ${theme.fontSize.xxl};
     font-weight: ${theme.fontWeight.bold};
+    background-color: ${theme.colors.green1};
+    color: ${theme.colors.white};
+    padding: 4px;
   `};
 `;

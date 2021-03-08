@@ -1,7 +1,6 @@
 import React, { FC, memo } from 'react';
 
 import { ImageProps } from './interfaces';
-
 import { ImageNotFoundStyledWrapper, ImageStyled } from './styles';
 import ImageNotFound from './image-not-found.svg';
 

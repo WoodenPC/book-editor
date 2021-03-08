@@ -1,77 +1,54 @@
-import React, { ChangeEvent, FC, memo, useCallback, useState } from 'react';
-import { AuthorsFieldProps } from './interfaces';
+import React, { ChangeEvent, FC, memo } from 'react';
+
 import Input from '../../../../ui/Input';
 import Button from '../../../../ui/Button';
 import Form from '../../../../ui/Form';
-import { Author } from '../../../../interfaces';
+import { ValidationMessageStyled } from '../SimpleField/styles';
+
 import { AuthorWrapperStyled } from './styles';
 import { AUTHOR_INPUT_ATTRIBUTES } from './constants';
-import { ValidationMessageStyled } from '../SimpleField/styles';
+import { AuthorsFieldProps } from './interfaces';
 
 /** поле с авторами */
 const AuthorsField: FC<AuthorsFieldProps> = (props) => {
   const { authors, onChange, validationStatus, validationMessage } = props;
 
-  const [authorsData, setAuthorsData] = useState<Author[]>(authors);
+  const handleAddAuthor = () => {
+    const updatedAuthors = [...authors, { name: '', surname: '' }];
+    onChange(updatedAuthors);
+  };
 
-  const handleAddAuthor = useCallback(() => {
-    setAuthorsData((prevAuthors) => {
-      const updatedAuthors = [...prevAuthors, { name: '', surname: '' }];
-      onChange(updatedAuthors);
-      return updatedAuthors;
-    });
-  }, [onChange]);
+  const handleEditAuthorName = (event: ChangeEvent<HTMLInputElement>) => {
+    const { id } = event.target;
+    const [, index] = id.split('-');
+    const updatedAuthors = [...authors];
+    const indexNum = (index as unknown) as number;
+    updatedAuthors[indexNum].name = event.target.value;
+    onChange(updatedAuthors);
+  };
 
-  const handleEditAuthorName = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const { id } = event.target;
-      const [, index] = id.split('-');
+  const handleEditAuthorSurname = (event: ChangeEvent<HTMLInputElement>) => {
+    const { id } = event.target;
+    const [, index] = id.split('-');
+    const updatedAuthors = [...authors];
+    const indexNum = (index as unknown) as number;
+    updatedAuthors[indexNum].surname = event.target.value;
+    onChange(updatedAuthors);
+  };
 
-      setAuthorsData((prevAuthors) => {
-        const updatedAuthors = [...prevAuthors];
-        const indexNum = (index as unknown) as number;
-        updatedAuthors[indexNum].name = event.target.value;
-        onChange(updatedAuthors);
-        return updatedAuthors;
-      });
-    },
-    [onChange],
-  );
-  const handleEditAuthorSurname = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const { id } = event.target;
-      const [, index] = id.split('-');
+  const handleRemoveAuthor = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const { id } = event.currentTarget;
 
-      setAuthorsData((prevAuthors) => {
-        const updatedAuthors = [...prevAuthors];
-        const indexNum = (index as unknown) as number;
-        updatedAuthors[indexNum].surname = event.target.value;
-        onChange(updatedAuthors);
-        return updatedAuthors;
-      });
-    },
-    [onChange],
-  );
-
-  const handleRemoveAuthor = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      const { id } = event.currentTarget;
-
-      const [, index] = id.split('-');
-      setAuthorsData((prevAuthors) => {
-        const updatedAuthors = [...prevAuthors];
-        const indexNum = (index as unknown) as number;
-        updatedAuthors.splice(indexNum, 1);
-        onChange(updatedAuthors);
-        return updatedAuthors;
-      });
-    },
-    [onChange],
-  );
+    const [, index] = id.split('-');
+    const updatedAuthors = [...authors];
+    const indexNum = (index as unknown) as number;
+    updatedAuthors.splice(indexNum, 1);
+    onChange(updatedAuthors);
+  };
 
   return (
     <Form.FormField label="Авторы книги" isRequired>
-      {authorsData.map((author, index) => (
+      {authors.map((author, index) => (
         <AuthorWrapperStyled key={index}>
           <Input
             placeholder="Фамилия"

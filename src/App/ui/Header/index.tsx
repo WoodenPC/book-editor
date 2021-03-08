@@ -1,8 +1,9 @@
 import React, { memo, useCallback } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { HeaderStyled, LinkStyled } from './styles';
 
 import Button from '../Button';
+
+import { HeaderStyled, LinkStyled } from './styles';
 
 /** шапка приложения */
 const Header = () => {
