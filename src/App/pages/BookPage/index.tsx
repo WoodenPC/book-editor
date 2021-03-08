@@ -1,6 +1,5 @@
 import React, { ChangeEvent, FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { isValid } from 'date-fns';
 import { v4 as uuid } from 'uuid';
 
 import BooksContext from '../../BooksContext';
@@ -11,7 +10,6 @@ import { BookPageUrlParams, FieldsValidationData } from './interfaces';
 import { validateBookData } from './utils/validateBookData';
 import { getDefaultFieldsValidationData } from './utils/getDefaultFieldsValidationData';
 import { checkIfAllFieldsAreValid } from './utils/checkIfAllFieldsAreValid';
-import { parseDateFromString } from './utils/parseDateFromString';
 import AuthorsField from './Fields/AuthorsField';
 import SimpleField from './Fields/SimpleField';
 import ImageField from './Fields/ImageField';

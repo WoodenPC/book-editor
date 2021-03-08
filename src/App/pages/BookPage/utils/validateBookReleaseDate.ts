@@ -1,4 +1,4 @@
-import { format, isValid } from 'date-fns';
+import { isValid } from 'date-fns';
 
 import { ValidationData } from '../interfaces';
 
