@@ -3,9 +3,7 @@ import styled from 'styled-components';
 import Link from '../Link';
 
 export const HeaderStyled = styled.div`
-  position: sticky;
   padding: 8px 0 16px 0;
-  top: 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

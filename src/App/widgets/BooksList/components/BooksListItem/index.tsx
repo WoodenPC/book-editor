@@ -64,8 +64,8 @@ const BooksListItem: FC<BooksListItemProps> = ({ book, onRemoveBook, onEditBook 
         </BookContentInfoStyled>
       </BooksListItemContentStyled>
       <ButtonsWrapperStyled>
-        <Button onClick={handleRemoveBook} text="Удалить" />
         <Button onClick={handleEditBook} text="Редактировать" appearance="primary" />
+        <Button onClick={handleRemoveBook} text="Удалить" />
       </ButtonsWrapperStyled>
     </BooksListItemStyled>
   );

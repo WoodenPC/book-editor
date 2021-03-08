@@ -9,6 +9,7 @@ import Button from '../../ui/Button';
 import { BookPageUrlParams, FieldsValidationData } from './interfaces';
 import { validateBookData } from './utils/validateBookData';
 import { getDefaultFieldsValidationData } from './utils/getDefaultFieldsValidationData';
+import { checkIfAllFieldsAreValid } from './utils/checkIfAllFieldsAreValid';
 import AuthorsField from './Fields/AuthorsField';
 import SimpleField from './Fields/SimpleField';
 import ImageField from './Fields/ImageField';
@@ -31,7 +32,7 @@ const BookPage: FC = () => {
         title: '',
         authors: [],
         pagesCount: 0,
-        id: '',
+        id: uuid(),
       },
     [id, books],
   );
@@ -58,7 +59,7 @@ const BookPage: FC = () => {
 
   const getBookData = (): Book => {
     return {
-      id: uuid(),
+      id: foundBook.id,
       title: bookTitle,
       authors: bookAuthors,
       pagesCount: bookPageCount || 0,
@@ -74,10 +75,7 @@ const BookPage: FC = () => {
     const bookData = getBookData();
     const fieldsValidationData = validateBookData(bookData);
     setFieldsValidationData(fieldsValidationData);
-    let isValidData = true;
-    Object.keys(fieldsValidationData).forEach((key) => {
-      isValidData = isValidData && fieldsValidationData[key].status;
-    });
+    let isValidData = checkIfAllFieldsAreValid(fieldsValidationData);
     if (isValidData) {
       handleAddBook(bookData);
       push(`/`);
@@ -92,8 +90,13 @@ const BookPage: FC = () => {
 
   const handleUpdateBookInStorage = () => {
     const bookData = getBookData();
-    handleUpdateBook(bookData);
-    setIsDirty(false);
+    const fieldsValidationData = validateBookData(bookData);
+    setFieldsValidationData(fieldsValidationData);
+    let isValidData = checkIfAllFieldsAreValid(fieldsValidationData);
+    if (isValidData) {
+      handleUpdateBook(bookData);
+      setIsDirty(false);
+    }
   };
 
   const handleCancel = useCallback(() => {
@@ -208,13 +211,13 @@ const BookPage: FC = () => {
       </FormStyled>
       {!id ? (
         <BottomMenuWrapperStyled>
-          <Button onClick={handleCancel} text="Отмена" />
           <Button onClick={handleAddBookToStorage} appearance="primary" text="Добавить книгу" />
+          <Button onClick={handleCancel} text="Отмена" />
         </BottomMenuWrapperStyled>
       ) : (
         <BottomMenuWrapperStyled>
-          <Button text="Удалить книгу" onClick={handleRemoveBookFromStorage} />
           {isDirty && <Button text="Сохранить изменения" appearance="primary" onClick={handleUpdateBookInStorage} />}
+          <Button text="Удалить книгу" onClick={handleRemoveBookFromStorage} />
         </BottomMenuWrapperStyled>
       )}
     </div>

@@ -27,9 +27,12 @@ const BooksList: FC<BooksListProps> = (props) => {
   return (
     <BooksListWrapperStyled>
       <FiltersWrapperStyled>
-        <Button text={`Сортировать по названию ${getButtonSortSuffix(sortingRules.byTitle)}`} onClick={onSortByTitle} />
         <Button
-          text={`Сортировать по дате публикации ${getButtonSortSuffix(sortingRules.byPublicationYear)}`}
+          text={`Сортировать по заголовку ${getButtonSortSuffix(sortingRules.byTitle)}`}
+          onClick={onSortByTitle}
+        />
+        <Button
+          text={`Сортировать по году публикации ${getButtonSortSuffix(sortingRules.byPublicationYear)}`}
           onClick={onSortByPublicationYear}
         />
       </FiltersWrapperStyled>

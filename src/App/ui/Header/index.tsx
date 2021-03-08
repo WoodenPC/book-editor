@@ -1,14 +1,15 @@
-import React, { memo, useCallback } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import React, { memo, useCallback, FC } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import Button from '../Button';
 
 import { HeaderStyled, LinkStyled } from './styles';
+import { HeaderProps } from './interfaces';
 
 /** шапка приложения */
-const Header = () => {
+const Header: FC<HeaderProps> = (props) => {
+  const { shouldDisplayAddNewBookButton } = props;
   const { push } = useHistory();
-  const { pathname } = useLocation();
 
   const handleGoToNewBookPage = useCallback(() => {
     push('/createBook');
@@ -19,7 +20,7 @@ const Header = () => {
       <div>
         <LinkStyled to="/" text="Список книг" />
       </div>
-      {pathname !== '/createBook' && (
+      {shouldDisplayAddNewBookButton && (
         <div>
           <Button onClick={handleGoToNewBookPage} text="Добавить книгу" appearance="primary" />
         </div>

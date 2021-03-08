@@ -11,7 +11,7 @@ export const BooksListWrapperStyled = styled.div`
 export const FiltersWrapperStyled = styled.div`
   display: flex;
   flex-direction: row;
-  margin-bottom: 4px;
+  margin-bottom: 10px;
   grid-gap: 4px;
 
   ${({ theme }) => css`

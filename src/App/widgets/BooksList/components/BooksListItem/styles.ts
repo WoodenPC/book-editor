@@ -31,12 +31,6 @@ export const ButtonsWrapperStyled = styled.div`
   `}
 `;
 
-export const BooksListItemContentWrapperStyled = styled.div`
-  padding: 16px;
-  border-radius: 4px;
-  background-color: ${({ theme }) => theme.colors.white};
-`;
-
 export const BooksListItemContentStyled = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
@@ -65,6 +59,7 @@ export const BookTitleStyled = styled.p`
     font-weight: ${theme.fontWeight.bold};
     background-color: ${theme.colors.green1};
     color: ${theme.colors.white};
+    min-height: 36px;
     padding: 4px;
   `};
 `;

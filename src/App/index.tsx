@@ -16,11 +16,19 @@ const App = () => {
       <Router>
         <BooksContextProvider>
           <AppLayout>
-            <Header />
             <Switch>
-              <Route path="/" exact component={BooksPage} />
-              <Route path="/createBook" component={BookPage} />
-              <Route path="/book/:id" component={BookPage} />
+              <Route path="/" exact>
+                <Header shouldDisplayAddNewBookButton />
+                <BooksPage />
+              </Route>
+              <Route path="/createBook">
+                <Header />
+                <BookPage />
+              </Route>
+              <Route path="/book/:id">
+                <Header shouldDisplayAddNewBookButton />
+                <BookPage />
+              </Route>
             </Switch>
           </AppLayout>
         </BooksContextProvider>
