@@ -52,7 +52,6 @@ const BookPage: FC = () => {
     setBookPageCount(foundBook.pagesCount);
     setBookPublisher(foundBook.publisher);
     const ua = navigator.userAgent.toLowerCase();
-    console.log(ua);
     if (ua.includes('safari') && !ua.includes('chrome')) {
       /** для safari выполняем преобразование формата даты */
       const parsedDate = parseDateFromString(foundBook.releaseDate);
