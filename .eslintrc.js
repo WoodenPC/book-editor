@@ -16,7 +16,7 @@ module.exports = {
   rules: {
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars-experimental': 'warn',
+    '@typescript-eslint/no-unused-vars-experimental': 'error',
     'import/order': [
       'warn',
       {

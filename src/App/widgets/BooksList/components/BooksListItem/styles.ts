@@ -18,9 +18,9 @@ export const BooksListItemStyled = styled.li`
 `;
 
 export const ButtonsWrapperStyled = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+  display: grid;
+  justify-content: right;
+  grid-template-columns: auto auto;
   grid-gap: 4px;
   padding: 6px;
 
@@ -60,6 +60,6 @@ export const BookTitleStyled = styled.p`
     background-color: ${theme.colors.green1};
     color: ${theme.colors.white};
     min-height: 36px;
-    padding: 4px;
+    padding: 6px;
   `};
 `;

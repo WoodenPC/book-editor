@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
+import { format, isValid } from 'date-fns';
 
 import BooksContext from '../../BooksContext';
 import { Author, Book } from '../../interfaces';
@@ -15,6 +16,7 @@ import SimpleField from './Fields/SimpleField';
 import ImageField from './Fields/ImageField';
 import { BottomMenuWrapperStyled, FormStyled, FieldsWrapper } from './styles';
 import { PUBLISHER_FIELD_ATTRIBUTES, TITLE_FIELD_ATTRIBUTES } from './constants';
+import { parseDateFromString } from './utils/parseDateFromString';
 
 /** Страница с инфой по книге */
 const BookPage: FC = () => {
@@ -49,8 +51,20 @@ const BookPage: FC = () => {
     setBookAuthors(foundBook.authors);
     setBookPageCount(foundBook.pagesCount);
     setBookPublisher(foundBook.publisher);
+    const ua = navigator.userAgent.toLowerCase();
+    console.log(ua);
+    if (ua.includes('safari') && !ua.includes('chrome')) {
+      /** для safari выполняем преобразование формата даты */
+      const parsedDate = parseDateFromString(foundBook.releaseDate);
+      if (isValid(parsedDate)) {
+        const dateStr: string = format(parsedDate, 'dd.MM.yyyy');
+        setBookReleaseDate(dateStr);
+      }
+    } else {
+      setBookReleaseDate(foundBook.releaseDate);
+    }
+
     setBookPublicationYear(foundBook.publicationYear);
-    setBookReleaseDate(foundBook.releaseDate);
     setBookIsbn(foundBook.isbn);
     setBookImage(foundBook.image);
   }, [foundBook]);
@@ -179,7 +193,7 @@ const BookPage: FC = () => {
             value={bookPageCount}
             isRequired
             type="number"
-            placeholder="0"
+            placeholder="5"
             validationStatus={fieldsValidationData.pageCount.status}
             validationMessage={fieldsValidationData.pageCount.message}
           />

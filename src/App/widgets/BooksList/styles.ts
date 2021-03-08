@@ -9,8 +9,9 @@ export const BooksListWrapperStyled = styled.div`
 `;
 
 export const FiltersWrapperStyled = styled.div`
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  justify-content: left;
+  grid-template-columns: auto auto;
   margin-bottom: 10px;
   grid-gap: 4px;
 

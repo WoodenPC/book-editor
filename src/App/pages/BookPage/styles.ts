@@ -3,9 +3,9 @@ import styled, { css } from 'styled-components';
 import Form from '../../ui/Form';
 
 export const BottomMenuWrapperStyled = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+  display: grid;
+  justify-content: right;
+  grid-template-columns: auto auto;
   width: 100%;
   grid-gap: 8px;
   margin-bottom: 8px;
