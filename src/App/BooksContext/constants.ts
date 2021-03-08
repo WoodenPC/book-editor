@@ -23,4 +23,5 @@ export const DEFAULT_BOOKS_CONTEXT: BooksContextState = {
   handleUpdateBook: (_) => {},
   handleSortByTitle: () => {},
   handleSortByPublicationYear: () => {},
+  handleGetSortedBooks: () => [],
 };

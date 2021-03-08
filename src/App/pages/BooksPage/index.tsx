@@ -1,18 +1,27 @@
-import React, { FC, useContext } from 'react';
+import React, { FC, useContext, useMemo } from 'react';
 
 import BooksList from '../../widgets/BooksList';
 import BooksContext from '../../BooksContext';
 
 /** страница со списком книг */
 const BooksPage: FC = () => {
-  const { books, handleRemoveBook, handleSortByTitle, handleSortByPublicationYear, sortingRules } = useContext(
-    BooksContext,
-  );
+  const {
+    books,
+    handleRemoveBook,
+    handleSortByTitle,
+    handleSortByPublicationYear,
+    sortingRules,
+    handleGetSortedBooks,
+  } = useContext(BooksContext);
+
+  const sortedBooks = useMemo(() => {
+    return handleGetSortedBooks(books, sortingRules);
+  }, [books, sortingRules]);
   return (
     <div>
-      {books.length > 0 ? (
+      {sortedBooks.length > 0 ? (
         <BooksList
-          books={books}
+          books={sortedBooks}
           onRemoveBook={handleRemoveBook}
           sortingRules={sortingRules}
           onSortByTitle={handleSortByTitle}

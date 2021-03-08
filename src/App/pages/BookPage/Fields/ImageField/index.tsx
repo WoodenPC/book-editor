@@ -24,14 +24,14 @@ const ImageField: FC<ImageFieldProps> = (props) => {
       /** сжимаем изображение, чтобы не получить километровый dataurl */
       const reader = new FileReader();
       const image = new Image();
-      image.width = 250;
-      image.height = 400;
+      image.width = 160;
+      image.height = 200;
       image.src = URL.createObjectURL(file);
 
       image.onload = () => {
         const canvas = document.createElement('canvas');
-        canvas.width = 250;
-        canvas.height = 400;
+        canvas.width = image.width;
+        canvas.height = image.height;
         const ctx = canvas.getContext('2d');
         if (!ctx) {
           return;
@@ -47,6 +47,10 @@ const ImageField: FC<ImageFieldProps> = (props) => {
     [onChange],
   );
 
+  const handleDropImage = useCallback(() => {
+    onChange(undefined);
+  }, [onChange]);
+
   const handleOpenFileDialog = useCallback(() => {
     const { current } = inputRef;
     if (!current) {
@@ -60,6 +64,7 @@ const ImageField: FC<ImageFieldProps> = (props) => {
       <ImageView src={imageUrl} alt="Обложка книги" width={160} height={200} />
       <input ref={inputRef} type="file" onChange={handleLoadImage} accept=".gif,.jpg,.jpeg,.png" />
       <Button text="Загрузить обложку" onClick={handleOpenFileDialog} />
+      {imageUrl && <Button text="Удалить обложку" onClick={handleDropImage} />}
     </ImageFieldStyled>
   );
 };

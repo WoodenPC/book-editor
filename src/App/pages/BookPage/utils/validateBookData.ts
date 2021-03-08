@@ -27,7 +27,7 @@ export function validateBookData(book: Book): FieldsValidationData {
      * и пользователь может ввести дату руками */
     let date = parseDateFromString(book.releaseDate);
     if (isValid(date)) {
-      book.releaseDate = format(date, 'yyyy-mm-dd');
+      book.releaseDate = format(date, 'yyyy-MM-dd');
     }
   }
 

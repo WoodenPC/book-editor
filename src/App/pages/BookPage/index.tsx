@@ -120,7 +120,7 @@ const BookPage: FC = () => {
   }, []);
 
   const handleChangePagesCount = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setBookPageCount(+event.target.value);
+    setBookPageCount(Math.round(+event.target.value));
     setIsDirty(true);
   }, []);
 
@@ -130,7 +130,7 @@ const BookPage: FC = () => {
   }, []);
 
   const handleChangePublicationYear = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setBookPublicationYear(+event.target.value);
+    setBookPublicationYear(Math.round(+event.target.value));
     setIsDirty(true);
   }, []);
 

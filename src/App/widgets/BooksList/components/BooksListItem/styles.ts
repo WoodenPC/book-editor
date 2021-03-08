@@ -35,7 +35,7 @@ export const BooksListItemContentStyled = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
   grid-gap: 14px;
-  padding: 6px;
+  padding: 6px 14px;
 
   ${({ theme }) => css`
     @media screen and (max-width: ${theme.breakpoints.tablet}) {

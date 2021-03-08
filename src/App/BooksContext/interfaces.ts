@@ -11,6 +11,8 @@ export interface BooksContextState {
   handleSortByTitle: () => void;
   /** сортировка книг по году публикации */
   handleSortByPublicationYear: () => void;
+  /** сортировка книг по году публикации */
+  handleGetSortedBooks: (books: Book[], sortingRules: BooksSortingRules) => Book[];
   /** книги */
   books: Book[];
   /** правила сортировки */

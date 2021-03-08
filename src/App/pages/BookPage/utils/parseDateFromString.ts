@@ -4,7 +4,7 @@ import { isValid, parse } from 'date-fns';
 export function parseDateFromString(str = ''): Date {
   let date = new Date(str);
   if (!isValid(date)) {
-    date = parse(str, 'dd.mm.yyyy', new Date());
+    date = parse(str, 'dd.MM.yyyy', new Date());
   }
 
   return date;

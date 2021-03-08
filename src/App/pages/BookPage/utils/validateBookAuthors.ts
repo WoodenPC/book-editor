@@ -6,10 +6,10 @@ export function validateBookAuthors(authors: Author[]): ValidationData {
   if (authors.length === 0) {
     return {
       status: false,
-      message: 'Книга должна содержать хотя бы 1 автора',
+      message: 'Должен быть указан хотя бы 1 автор',
     };
   } else {
-    if (authors.some((author) => author.name.length === 0 && author.surname.length === 0)) {
+    if (authors.some((author) => author.name.length === 0 || author.surname.length === 0)) {
       return {
         status: false,
         message: 'Имя и фамилия авторов должны быть заполнены',
